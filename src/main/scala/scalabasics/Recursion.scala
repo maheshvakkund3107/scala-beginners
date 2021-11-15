@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 import scala.annotation.tailrec
 

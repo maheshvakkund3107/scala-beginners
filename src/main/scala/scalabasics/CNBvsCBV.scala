@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 object CNBvsCBV extends App {
   /*

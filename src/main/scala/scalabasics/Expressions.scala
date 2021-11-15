@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 object Expressions extends App {
   val x = 1 + 2

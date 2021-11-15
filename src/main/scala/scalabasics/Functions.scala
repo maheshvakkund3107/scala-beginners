@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 object Functions extends App {
 

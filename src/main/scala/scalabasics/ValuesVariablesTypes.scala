@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 object ValuesVariablesTypes extends App {
   val x: Int = 10

@@ -1,4 +1,4 @@
-package lectures
+package scalabasics
 
 object DefaultArgs extends App {
   val fact12 = trFact(12)
