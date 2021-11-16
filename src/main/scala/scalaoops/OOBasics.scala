@@ -1,5 +1,7 @@
 package scalaoops
 
+import scalaoops.practiceexercise.{Counter, Novel, Person, Writer}
+
 object OOBasics extends App {
   val person = new Person("Mahesh", 26)
   println(person.age)
@@ -19,85 +21,5 @@ object OOBasics extends App {
 
 }
 
-/*class Person(name: String, age: Int) */
-//consructor
-
-class Person(name: String, val age: Int) { //consructor
-  val x = 2
-  println(1 + 3)
-
-  def greet(name: String): Unit = {
-    println(s"${this.name} says :Hi , $name")
-  }
-
-  //Method Overloading
-  def greet(): Unit = {
-    print(s"Hi , I am $name")
-  }
-
-  def this(name: String) = this(name, 0)
-  def this() = this("John Doe")
-}
-
 //class paramter are NOT FIELDS
 //To make them fields add the keyword val or var
-
-/*
-Novel and Writer
-Writer:firstname, surname, year
--method fullname
-
-Novel:name, year of release, author
--author age
--isWrittenBy
--copy(new year of release)=new instance of novel
- */
-class Writer(firstname: String, surname: String, var year: Int) {
-  def fullName = firstname + "-" + surname
-}
-
-class Novel(name: String, year: Int, author: Writer) {
-  def authorAge = {
-    year - author.year
-  }
-  def isWrittenBy(author: Writer) = {
-    author == this.author
-  }
-  def copy(newYear: Int): Novel = {
-    new Novel(name, newYear, author)
-  }
-}
-
-/*
-Counter class
--recieves an int value
--method current count
--method to increment/decremet =>new Counter
--overload inc/dec to recieve an amount
- */
-class Counter(val count: Int) {
-  def inc(): Counter = {
-    println("Incrementing")
-    new Counter(count + 1)
-  }
-  def dec(): Counter = {
-    println("Decrementing")
-    new Counter(count - 1)
-  }
-
-  def inc(n: Int): Counter = {
-    if (n <= 0) this
-    else
-      inc().inc(n - 1)
-  }
-
-  def dec(n: Int): Counter = {
-    if (n <= 0) this
-    else
-      dec().dec(n - 1)
-  }
-
-  def print(): Unit = {
-    println(count)
-  }
-}
