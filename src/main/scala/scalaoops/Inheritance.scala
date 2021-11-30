@@ -1,6 +1,6 @@
 package scalaoops
 
-object InheritanceAndTraits extends App {
+object Inheritance extends App {
   /*
   Single class inheritance.
   Access Modifiers available in scala are
