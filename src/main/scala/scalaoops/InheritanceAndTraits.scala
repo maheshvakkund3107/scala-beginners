@@ -9,9 +9,9 @@ object InheritanceAndTraits extends App {
   3.Private
   By default the access modifier is public
    */
-  class Animal {
+  sealed class Animal {
     val creatureType = "wild"
-    protected def eat = { println("Eating") }
+    def eat = { println("Animal is Eating") }
   }
   class Cat extends Animal {
     def crunch = {
@@ -42,6 +42,9 @@ object InheritanceAndTraits extends App {
       extends PersonNew(name: String)
 
   //Overriding
+  /*
+  Fields from the superclass can be overriden directly in the constructor of the child class
+   */
   class Dog(override val creatureType: String) extends Animal {
     /*
     override val creatureType: String = "domestic"
@@ -51,4 +54,26 @@ object InheritanceAndTraits extends App {
   val dog = new Dog("domestic")
   dog.eat
   println(dog.creatureType)
+
+  //Type Substitution : For the instance of Dog we can use the type as Animal this is called as Polymorphism
+  val unknownAnimal: Animal = new Dog("K9")
+  unknownAnimal.eat
+
+  //Super is used when you want to reference a method or a field from the parent class.
+  class Tiger extends Animal {
+    override def eat: Unit = {
+      super.eat
+      println("Tiger is eating")
+    }
+  }
+  val tiger = new Tiger
+  tiger.eat
+
+  //Preventing Overrides.
+  /*
+  1.Use final keyword on the fields or members or methods.
+  2.Use final on the entire class - Stop the Extension to all classes.
+  3.Seal the class - Extend classes in this file and prevent extension in other files.
+   */
+
 }
