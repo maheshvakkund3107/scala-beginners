@@ -11,6 +11,10 @@ object Generics extends App {
   class MyList[+A] {
     //def add(element: A): MyList[A] = ???
     def add[B >: A](element: B): MyList[B] = ???
+    /*
+    A = Cat
+    B = Dog its a Animal i.e  B=Animal
+     */
 
   }
 
