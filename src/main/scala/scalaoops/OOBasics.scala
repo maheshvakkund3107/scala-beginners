@@ -21,5 +21,5 @@ object OOBasics extends App {
 
 }
 
-//class paramter are NOT FIELDS
-//To make them fields add the keyword val or var
+/**class paramter are NOT FIELDS*/
+/**To make them fields add the keyword val or var*/

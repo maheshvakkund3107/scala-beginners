@@ -1,26 +1,32 @@
 package scalaoops
 
+/**
+  *
+  */
 object AnonymousClasses {
+
+  /**
+    *
+    * @param args
+    */
   def main(args: Array[String]): Unit = {
 
     abstract class Animal {
       def eat: Unit
     }
-
     val funnyAnimal: Animal = new Animal {
       override def eat: Unit = println("hahahaha")
     }
 
     println(funnyAnimal.getClass)
-    /*
-    Behind the scenes when a Anonymous class is created.
 
-    class AnonymousClasses$$anon$1 extends Animal{
-     override def eat: Unit = println("hahahaha")
-    }
-
-    val funnyAnimal: Animal = new Animal
-     */
+    /**
+      * Behind the scenes when a Anonymous class is created.
+      class AnonymousClasses$$anon$1 extends Animal{
+        override def eat: Unit = println("hahahaha")
+      }
+      val funnyAnimal: Animal = new Animal
+      */
 
     class Person(name: String) {
       def sayHi: Unit = {
@@ -33,10 +39,10 @@ object AnonymousClasses {
         println("Hi ,my name is Jim , how can i be of service")
     }
 
-    /*
-    Rules for Anonymous Class:
-    1. Pass in required constructor arguments if needed.
-    2. Implement all abstract fields/Methods.
-     */
+    /**
+      * Rules for Anonymous Class:
+      * 1. Pass in required constructor arguments if needed.
+      * 2. Implement all abstract fields/Methods.
+      */
   }
 }
