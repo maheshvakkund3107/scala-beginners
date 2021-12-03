@@ -24,5 +24,5 @@ object WhatsAFunction extends App {
 
   val adder3 = superAdder(3)
   println(adder3(4))
-  println(adder3(4)(3)) /**Curried Function*/
+  println(superAdder(4)(3)) /**Curried Function*/
 }
