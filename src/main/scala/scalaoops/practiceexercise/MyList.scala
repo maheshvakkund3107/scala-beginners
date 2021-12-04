@@ -252,6 +252,9 @@ object ListTest extends App {
   println(listOfIntegers.toString)
   println(listOfStrings.toString)
 
+  /**
+    *
+    *
   println(
     listOfIntegers
       .map(new Function1[Int, Int] {
@@ -277,6 +280,23 @@ object ListTest extends App {
             new Cons(element, new Cons[Int](element + 1, Empty))
         }
       )
+      .toString
+  )*/
+
+  println(
+    listOfIntegers
+      .map((element: Int) => element * 2)
+      .toString
+  )
+
+  println(
+    listOfIntegers
+      .filter(element => element % 2 == 0)
+      .toString
+  )
+  println(
+    listOfIntegers
+      .flatMap(element => new Cons(element, new Cons[Int](element + 1, Empty)))
       .toString
   )
 }
