@@ -74,6 +74,13 @@ abstract class MyList[+A] {
     * @return
     */
   def ++[B >: A](list: MyList[B]): MyList[B]
+
+  /**
+    *
+    * @param f
+    */
+  def foreach(f: A => Unit): Unit
+
 }
 
 case object Empty extends MyList[Nothing] {
@@ -143,6 +150,13 @@ case object Empty extends MyList[Nothing] {
     * @return
     */
   def ++[B >: Nothing](list: MyList[B]): MyList[B] = list
+
+  /**
+    *
+    * @param f
+    */
+  def foreach(f: Nothing => Unit): Unit = ()
+
 }
 
 case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
@@ -240,6 +254,15 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     * @return
     */
   def ++[B >: A](list: MyList[B]): MyList[B] = new Cons(h, t ++ list)
+
+  /**
+    *
+    * @param f
+    */
+  def foreach(f: A => Unit): Unit = {
+    f(h)
+    t.foreach(f)
+  }
 }
 
 /**
@@ -255,33 +278,33 @@ object ListTest extends App {
   /**
     *
     *
-  println(
-    listOfIntegers
-      .map(new Function1[Int, Int] {
-        override def apply(element: Int): Int = element * 2
-      })
-      .toString
-  )
-
-  println(
-    listOfIntegers
-      .filter(
-        new Function1[Int, Boolean] {
-          override def apply(element: Int): Boolean = element % 2 == 0
-        }
-      )
-      .toString
-  )
-  println(
-    listOfIntegers
-      .flatMap(
-        new Function1[Int, MyList[Int]] {
-          override def apply(element: Int): MyList[Int] =
-            new Cons(element, new Cons[Int](element + 1, Empty))
-        }
-      )
-      .toString
-  )*/
+    * println(
+    * listOfIntegers
+    * .map(new Function1[Int, Int] {
+    * override def apply(element: Int): Int = element * 2
+    * })
+    * .toString
+    * )
+    *
+    * println(
+    * listOfIntegers
+    * .filter(
+    * new Function1[Int, Boolean] {
+    * override def apply(element: Int): Boolean = element % 2 == 0
+    * }
+    * )
+    * .toString
+    * )
+    * println(
+    * listOfIntegers
+    * .flatMap(
+    * new Function1[Int, MyList[Int]] {
+    * override def apply(element: Int): MyList[Int] =
+    * new Cons(element, new Cons[Int](element + 1, Empty))
+    * }
+    * )
+    * .toString
+    * ) */
 
   println(
     listOfIntegers
@@ -299,4 +322,5 @@ object ListTest extends App {
       .flatMap(element => new Cons(element, new Cons[Int](element + 1, Empty)))
       .toString
   )
+  listOfIntegers.foreach(x => println(x))
 }
