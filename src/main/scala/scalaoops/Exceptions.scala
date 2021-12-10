@@ -9,7 +9,6 @@ object Exceptions extends App {
     * Throwable classes extend Throwable class
     * Exception and Error are the major Throwable subtypes
     */
-  /*val aWeirdValue: String = throw new NullPointerException*/
 
   /**
     * 2. How To catch exceptions.
