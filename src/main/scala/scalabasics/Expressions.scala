@@ -7,7 +7,7 @@ object Expressions extends App {
   //+ - * / & | ^ << >> >>> (right shift with zero extension)
   println(1 == x)
   // == != > >= < <=
-  println(!(1 == x))
+  println(1 != x)
   // ! && ||
 
   var aVariable = 2

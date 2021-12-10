@@ -22,7 +22,6 @@ object Functions extends App {
     */
   def aParameterlessFunction(): Int = 42
   println(aParameterlessFunction())
-  /*  println(aParameterlessFunction)*/
 
   /**Recursive Functions*/
 
@@ -92,8 +91,9 @@ object Functions extends App {
     */
   def primeNumber(n: Int): Boolean = {
     def isPrimeUntill(t: Int): Boolean = {
-      if (t <= 1) true
-      else n % t != 0 && isPrimeUntill(t - 1)
+      if (t <= 1) {
+        true
+      } else { n % t != 0 && isPrimeUntill(t - 1) }
     }
     isPrimeUntill(n / 2)
 

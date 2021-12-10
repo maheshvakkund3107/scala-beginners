@@ -43,6 +43,5 @@ object CNBvsCBV extends App {
     * @param y
     */
   def printFirst(x: Int, y: => Int) = println(x)
-  //printFirst(infinite(), 34)
   printFirst(34, infinite())
 }
