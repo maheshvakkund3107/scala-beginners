@@ -39,6 +39,8 @@ object AnonymousClasses {
         println("Hi ,my name is Jim , how can i be of service")
     }
 
+    print(jim)
+
     /**
       * Rules for Anonymous Class:
       * 1. Pass in required constructor arguments if needed.
