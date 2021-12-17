@@ -1,5 +1,8 @@
 package collections
 
+import java.sql.Connection
+import scala.util.Random
+
 object option extends App {
 
   val myFirstOption: Option[Int] = Some(4)
@@ -60,5 +63,55 @@ object option extends App {
    * For Comprehensions
    */
 
+  /**
+   * Exercise 1
+   */
 
+  val config: Map[String, String] = Map(
+    "host" -> "127.0.0.1",
+    "port" -> "8080"
+  )
+
+  class Connection {
+    def connect = "Connected"
+  }
+
+  object Connection {
+    val random = new Random(System.nanoTime())
+
+    def apply(host: String, port: String): Option[Connection] = {
+      if (random.nextBoolean()) Some(new Connection)
+      else None
+    }
+  }
+
+  /**
+   * Try to establish the connection, if so- print the connect method.
+   */
+
+  val host = config.get("host")
+  val port = config.get("port")
+  /**
+   * if (h!=null)
+   * if(p!=null)
+   * return Connection.apply(h,p)
+   */
+  val connection = host.flatMap(h => port.flatMap(p => Connection.apply(h, p)))
+  /**
+   * if(connectionStats == null) println(None) else print(ConnectionStatus.get)
+   *
+   */
+  val connectionStatus = connection.map(c => c.connect)
+  println(connectionStatus)
+
+  /**
+   * if(status!=null)
+   * println(status)
+   */
+  connectionStatus.foreach(println)
+  config.get("host")
+    .flatMap(host => config.get("port")
+      .flatMap(port => Connection(host, port))
+      .map(connection => connection.connect))
+    .foreach(println)
 }
