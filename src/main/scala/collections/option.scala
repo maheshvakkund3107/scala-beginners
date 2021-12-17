@@ -109,9 +109,22 @@ object option extends App {
    * println(status)
    */
   connectionStatus.foreach(println)
+
+  /**
+   * Chained calls.
+   */
   config.get("host")
     .flatMap(host => config.get("port")
       .flatMap(port => Connection(host, port))
       .map(connection => connection.connect))
     .foreach(println)
+
+  /**
+   * For Comprehension
+   */
+  val forConnectionStatus = for {
+    host <- config.get("host")
+    port <- config.get("port")
+    connection <- Connection(host, port)
+  } yield connection.connect
 }
