@@ -1,5 +1,6 @@
 package patternmatching
 
+import java.beans.Expression
 import scala.util.Random
 
 object PatternMatching extends App {
@@ -53,4 +54,29 @@ object PatternMatching extends App {
   val isEvenCond = if (i % 2 == 0) true else false
   val isEvenNormal = i % 2 == 0
 
+  /** Exercise.
+    */
+
+  trait Expr
+  case class Number(n: Int) extends Expr
+  case class Sum(e1: Expr, e2: Expr) extends Expr
+  case class Prod(e1: Expr, e2: Expr) extends Expr
+
+  def show(e: Expr): String = e match {
+    case Number(n)   => s"$n"
+    case Sum(e1, e2) => show(e1) + "+" + show(e2)
+    case Prod(e1, e2) => {
+      def mayBeShowParanthesis(exp: Expr) =
+        exp match {
+          case Prod(_, _) => show(exp)
+          case Number(_)  => show(exp)
+          case _          => "(" + show(exp) + ")"
+        }
+
+      mayBeShowParanthesis(e1) + "*" + mayBeShowParanthesis(e2)
+    }
+  }
+  println(show(Sum(Number(2), Number(3))))
+  println(show(Sum(Sum(Number(2), Number(3)), Number(4))))
+  println(show(Prod(Sum(Number(2), Number(3)), Number(4))))
 }
