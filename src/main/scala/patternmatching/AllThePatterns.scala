@@ -22,9 +22,10 @@ case object AllThePatterns extends App {
   /** 2-Match Anything
     * 2.1 Wild Card.
     */
-  val matchAnything = x match {
-    case _ => "Wildcard"
-  }
+  /** val matchAnything = x match {
+    *    case _ => "Wildcard"
+    *  }
+    */
 
   /** 2.2 Variables
     */
