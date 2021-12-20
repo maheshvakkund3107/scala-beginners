@@ -26,7 +26,6 @@ object Expressions extends App {
 
   /**    Expression is something which has value or types.
     *    Expressions are evaluated
-    *    IF in scala is a recurssion
     */
 
   /** If Expression
@@ -65,4 +64,11 @@ object Expressions extends App {
 
     if (z > 2) "hello" else "goodbye"
   }
+
+  /** 1.IF in scala is an expression.
+    * 2.Code Blocks in scala are expressions (The value of the block is the value of its last expression).
+    * 3.Expression vs Instruction
+    *  -Instructions are executed while Expressions are evaluated.
+    *  -In Scala we will think in terms of expressions.
+    */
 }
