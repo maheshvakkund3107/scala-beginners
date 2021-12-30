@@ -10,6 +10,9 @@ object Expressions extends App {
   println(1 + 2)
   println(1 + 2 * 4)
   //+ - * / & | ^ << >> >>> (right shift with zero extension)
+  /**
+    * Below is an expression which evaluates to a boolean
+    */
   println(1 == x)
   // == != > >= < <=
   println(1 != x)
@@ -34,8 +37,12 @@ object Expressions extends App {
   val aCondition = true
   val aConditionValue = if (aCondition) 5 else 4
   println(aConditionValue)
+  println(if (aCondition) 5 else 4)
+  println(4 + 6)
 
-  /** Never write loop
+  /** Never write loop like in other languages we use(JAVA, C++).
+    * Since it is specific to imperative programming language.
+    * Scala is a functional programming.
     */
 
   var i = 0
@@ -48,14 +55,17 @@ object Expressions extends App {
     */
 
   /** Unit === void
+    * value of unit is ()
     */
-  val aWeirdValue = (aVariable = 3)
+  val aWeirdValue: Unit = aVariable = 3
   println(aWeirdValue)
 
   /** Side effects: println, whiles, reassigning
     */
 
   /**  Code Blocks
+    * Values and variables defined inside the code have the code block scope
+    * and cannot be accessed outside the code block.
     */
 
   val aCodeBlock = {
