@@ -54,14 +54,14 @@ object Recursion extends App {
   }
   println(stringTimes("mah", 5))
 
-  /** @param n
-    * @return
+  /** @param n -Number is taken as parameter to check whether it is prime or not.
+    * @return - Returns true if it prime else false.
     */
   def primeNumber(n: Int): Boolean = {
 
-    /** @param t
-      * @param isStillPrime
-      * @return
+    /** @param t -Number is taken as parameter to check whether it is prime or not.
+      * @param isStillPrime -Returns true if it prime else false.
+      * @return -Returns true if it prime else false.
       */
     @tailrec
     def isPrimeUntil(t: Int, isStillPrime: Boolean): Boolean = {
@@ -73,15 +73,15 @@ object Recursion extends App {
   }
   println(primeNumber(10))
 
-  /** @param n
-    * @return
+  /** @param n -Number is taken as parameter to calculate the fibonacci value.
+    * @return -  fibonacci value.
     */
   def fibonacciSeries(n: Int): Int = {
 
-    /** @param x
-      * @param last
-      * @param nextToLast
-      * @return
+    /** @param x  -Number is taken as parameter to calculate the fibonacci value.
+      * @param last - last value in the series.
+      * @param nextToLast - value previous to last value in series.
+      * @return - fibonacci value.
       */
     @tailrec
     def fibSeries(x: Int, last: Int, nextToLast: Int): Int = {
