@@ -79,8 +79,8 @@ object Recursion extends App {
   def fibonacciSeries(n: Int): Int = {
 
     /** @param x  -Number is taken as parameter to calculate the fibonacci value.
-      * @param last - last value in the series.
-      * @param nextToLast - value previous to last value in series.
+      * @param last - last value in the series (value of n-1).
+      * @param nextToLast - value previous to last value in series(value of n-2).
       * @return - fibonacci value.
       */
     @tailrec
