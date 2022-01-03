@@ -1,32 +1,24 @@
 package scalaoops.practiceexercise
 
-/**
-  *
-  * @param name
-  * @param year
-  * @param author
+/** @param name - Name of the Novel
+  * @param year - Year of Release of the Novel.
+  * @param author - Writer object.
   */
 class Novel(name: String, year: Int, author: Writer) {
 
-  /**
-    *
-    * @return
+  /** @return
     */
-  def authorAge = {
+  def authorAge: Int = {
     year - author.year
   }
 
-  /**
-    *
-    * @param author
+  /** @param author - Takes an Writer object as parameter.
     */
-  def isWrittenBy(author: Writer) = {
+  def isWrittenBy(author: Writer): Boolean = {
     author == this.author
   }
 
-  /**
-    *
-    * @param newYear
+  /** @param newYear - Takes an year values as parameter.
     * @return
     */
   def copy(newYear: Int): Novel = {

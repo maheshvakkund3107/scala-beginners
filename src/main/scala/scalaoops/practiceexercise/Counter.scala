@@ -1,5 +1,7 @@
 package scalaoops.practiceexercise
 
+import scala.annotation.tailrec
+
 /** Counter class
   * -receives an int value
   * -method current count
@@ -12,6 +14,9 @@ class Counter(val count: Int) {
     */
   def inc(): Counter = {
     println("Incrementing")
+
+    /** Immutability.
+      */
     new Counter(count + 1)
   }
 

@@ -1,11 +1,9 @@
 package scalaoops.practiceexercise
 
-/**
-  *
-  * @param firstname
-  * @param surname
-  * @param year
+/** @param firstname - First Name of the writer.
+  * @param surname - Last Name of the Author.
+  * @param year - Year of birth of the author.
   */
 class Writer(firstname: String, surname: String, var year: Int) {
-  def fullName = firstname + "-" + surname
+  def fullName: String = firstname + "-" + surname
 }
