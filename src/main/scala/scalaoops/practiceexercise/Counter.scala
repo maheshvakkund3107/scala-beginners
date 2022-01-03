@@ -1,35 +1,28 @@
 package scalaoops.practiceexercise
 
-/**
-Counter class
--recieves an int value
--method current count
--method to increment/decremet =>new Counter
--overload inc/dec to recieve an amount
+/** Counter class
+  * -receives an int value
+  * -method current count
+  * -method to increment/decrement =>new Counter
+  * -overload inc/dec to receive an amount
   */
 class Counter(val count: Int) {
 
-  /**
-    *
-    * @return
+  /** @return
     */
   def inc(): Counter = {
     println("Incrementing")
     new Counter(count + 1)
   }
 
-  /**
-    *
-    * @return
+  /** @return
     */
   def dec(): Counter = {
     println("Decrementing")
     new Counter(count - 1)
   }
 
-  /**
-    *
-    * @param n
+  /** @param n- Takes a number of int type to increment.
     * @return
     */
   def inc(n: Int): Counter = {
@@ -38,9 +31,7 @@ class Counter(val count: Int) {
       inc().inc(n - 1)
   }
 
-  /**
-    *
-    * @param n
+  /** @param n - Takes a number of int type to decrement.
     * @return
     */
   def dec(n: Int): Counter = {
@@ -50,7 +41,6 @@ class Counter(val count: Int) {
   }
 
   /**
-    *
     */
   def print(): Unit = {
     println(count)
