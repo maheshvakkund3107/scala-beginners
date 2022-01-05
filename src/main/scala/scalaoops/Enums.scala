@@ -16,7 +16,7 @@ object Enums{
 
 
   /**
-   * 1.Enumbs can take constructor args.
+   * 1.Enums can take constructor args.
    */
   enum PermissionWithBits(bits:Int){
     case READ extends PermissionWithBits(4)
@@ -37,9 +37,9 @@ object Enums{
   /**
    * Standard API for enum.
    */
-  val somePermissionsOrdinal=somePermission.ordinal
-  val allPermissions=PermissionWithBits.values //array of all possible values of the enum
-  val readPermission = Permissions.valueOf("READ") //No arg constructor is required
+  val somePermissionsOrdinal: Int =somePermission.ordinal
+  val allPermissions: Any =PermissionWithBits.values //array of all possible values of the enum
+  val readPermission: Permissions = Permissions.valueOf("READ") //No arg constructor is required
 
   def main(args: Array[String]): Unit = {
     somePermission.openDocument()
