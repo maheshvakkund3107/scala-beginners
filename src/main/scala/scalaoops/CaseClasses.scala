@@ -48,6 +48,8 @@ object CaseClasses extends App {
     * Case classes can be used in pattern matching
     */
 
+  /** Case objects don't get companion objects since they are their own companion object.
+    */
   case object UnitedKingdom {
     def name: String = "UK"
   }
