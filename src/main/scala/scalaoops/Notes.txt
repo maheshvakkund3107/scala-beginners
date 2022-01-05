@@ -32,3 +32,11 @@
       )
       .toString
 
+ --Using Functions
+  println(
+    listOfIntegers
+      .map(new Function1[Int, Int] {
+        override def apply(elem: Int): Int = elem * 2
+      })
+      .toString
+  )

@@ -31,18 +31,18 @@ abstract class MyList[+A] {
     * @tparam B -Type Parameter
     * @return
     */
-  def map[B](transformer: MyTransformer[A, B]): MyList[B]
+  def map[B](transformer: A => B): MyList[B]
 
   /** @param transformer- Receives a MyTransformer Object
     * @tparam B -Type Parameter
     * @return
     */
-  def flatMap[B](transformer: MyTransformer[A, MyList[B]]): MyList[B]
+  def flatMap[B](transformer: A => MyList[B]): MyList[B]
 
   /** @param predicate - Receives a MyPredicate Object
     * @return
     */
-  def filter(predicate: MyPredicate[A]): MyList[A]
+  def filter(predicate: A => Boolean): MyList[A]
 
   /** @param list - Receives a object of MyList.
     * @tparam B -Type Parameter
@@ -79,19 +79,19 @@ case object Empty extends MyList[Nothing] {
     * @tparam B -Type Parameter
     *  @return
     */
-  def map[B](transformer: MyTransformer[Nothing, B]): MyList[B] = Empty
+  def map[B](transformer: Nothing => B): MyList[B] = Empty
 
   /** @param transformer- Receives a MyTransformer Object
     * @tparam B -Type Parameter
     *  @return
     */
-  def flatMap[B](transformer: MyTransformer[Nothing, MyList[B]]): MyList[B] =
+  def flatMap[B](transformer: Nothing => MyList[B]): MyList[B] =
     Empty
 
   /** @param predicate- Receives a MyPredicate Object
     *  @return
     */
-  def filter(predicate: MyPredicate[Nothing]): MyList[Nothing] = Empty
+  def filter(predicate: Nothing => Boolean): MyList[Nothing] = Empty
 
   /** @param list- Receives a object of MyList.
     * @tparam B -Type Parameter
@@ -129,8 +129,8 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
   /** @param predicate- Receives a MyPredicate Object
     *  @return
     */
-  def filter(predicate: MyPredicate[A]): MyList[A] = {
-    if (predicate.test(h)) Cons(h, t.filter(predicate))
+  def filter(predicate: A => Boolean): MyList[A] = {
+    if (predicate(h)) Cons(h, t.filter(predicate))
     else t.filter(predicate)
   }
 
@@ -138,8 +138,8 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     * @tparam B -Type Parameter
     *  @return
     */
-  def map[B](transformer: MyTransformer[A, B]): MyList[B] = {
-    Cons(transformer.transform(h), t.map(transformer))
+  def map[B](transformer: A => B): MyList[B] = {
+    Cons(transformer(h), t.map(transformer))
   }
 
   /** @param list- Receives a object of MyList.
@@ -152,20 +152,8 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     * @tparam B -Type Parameter
     *  @return
     */
-  def flatMap[B](transformer: MyTransformer[A, MyList[B]]): MyList[B] =
-    transformer.transform(h) ++ t.flatMap(transformer)
-}
-
-/** Generic Trait MyPredicate[T]
-  */
-trait MyPredicate[-T] {
-  def test(element: T): Boolean
-}
-
-/** Generic trait MyTransformer[A,B]
-  */
-trait MyTransformer[-A, B] {
-  def transform(elem: A): B
+  def flatMap[B](transformer: A => MyList[B]): MyList[B] =
+    transformer(h) ++ t.flatMap(transformer)
 }
 
 /** MyList
@@ -202,4 +190,11 @@ object ListTest extends App {
       .toString
   )
   println(listOfIntegers == anotherListOfIntegers)
+
+  println(
+    listOfIntegers
+      .map((elem: Int) => elem * 2)
+      .toString
+  )
+
 }
