@@ -4,26 +4,20 @@ import scalaoops.practiceexercise.Writer
 
 object PackagingAndImports extends App {
 
-  /**
-    * Package members are accessible by their simple name
+  /** Package members are accessible by their simple name
     */
-  val writer = new Writer("mahesh", "abcd", 2011)
+  val writer = new Writer("mahesh", "abed", 2011)
 
-  /**
-    * Importing the package using Fully Qualified Name.
-    * scalaoops.practiceexercise.Writer
+  /** Importing the package using Fully Qualified Name.
+    * scalaoops.practice-exercise.Writer
     */
 
-  /**
-    * Package Object
+  /** Package Object
     */
-  sayHello
-  println(SPPED_OF_LIGHT)
+  sayHello()
+  println(SPEED_OF_LIGHT)
 
-  /**
-    * If multiple Classes/objects are to be imported from the same package
-    *
-    * scalaoops.practiceexercise._
+  /** If multiple Classes/objects are to be imported from the same package
     */
 
 }
