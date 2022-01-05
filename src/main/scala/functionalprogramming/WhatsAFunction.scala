@@ -2,8 +2,7 @@ package functionalprogramming
 
 object WhatsAFunction extends App {
 
-  /**
-    * DREAM : Use Functions as first class elements.
+  /** DREAM : Use Functions as first class elements.
     * Problem : OOP.
     */
 
@@ -17,12 +16,12 @@ object WhatsAFunction extends App {
   }
   println(stringToInt("3") + 4)
 
-  val adder: ((Int, Int) => Int) = new Function2[Int, Int, Int] {
+  /*  val adder: ((Int, Int) => Int) = new Function2[Int, Int, Int] {
     override def apply(a: Int, b: Int): Int = a + b
-  }
+  }*/
+  val adder: (Int, Int) => Int = (a: Int, b: Int) => a + b
 
-  /**
-    * Function types : Function2[A,B,R] === (A,B)=>R
+  /** Function types : Function2[A,B,R] === (A,B)=>R
     * ALL SCALA FUNCTIONS ARE OBJECTS.
     */
 
@@ -30,9 +29,7 @@ object WhatsAFunction extends App {
 
 trait MyFunction[A, B] {
 
-  /**
-    *
-    * @param element
+  /** @param element Takes an element of the type A.
     * @return
     */
   def apply(element: A): B
