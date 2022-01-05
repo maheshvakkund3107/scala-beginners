@@ -27,6 +27,28 @@ abstract class MyList[+A] {
     */
   override def toString: String = "[" + printElements + "]"
 
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    * @return
+    */
+  def map[B](transformer: MyTransformer[A, B]): MyList[B]
+
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    * @return
+    */
+  def flatMap[B](transformer: MyTransformer[A, MyList[B]]): MyList[B]
+
+  /** @param predicate - Receives a MyPredicate Object
+    * @return
+    */
+  def filter(predicate: MyPredicate[A]): MyList[A]
+
+  /** @param list - Receives a object of MyList.
+    * @tparam B -Type Parameter
+    * @return
+    */
+  def ++[B >: A](list: MyList[B]): MyList[B]
 }
 
 object Empty extends MyList[Nothing] {
@@ -52,6 +74,30 @@ object Empty extends MyList[Nothing] {
   /** @return
     */
   override def printElements: String = ""
+
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    *  @return
+    */
+  def map[B](transformer: MyTransformer[Nothing, B]): MyList[B] = Empty
+
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    *  @return
+    */
+  def flatMap[B](transformer: MyTransformer[Nothing, MyList[B]]): MyList[B] =
+    Empty
+
+  /** @param predicate- Receives a MyPredicate Object
+    *  @return
+    */
+  def filter(predicate: MyPredicate[Nothing]): MyList[Nothing] = Empty
+
+  /** @param list- Receives a object of MyList.
+    * @tparam B -Type Parameter
+    * @return
+    */
+  def ++[B >: Nothing](list: MyList[B]): MyList[B] = list
 
 }
 
@@ -79,13 +125,99 @@ class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
   override def printElements: String =
     if (t.isEmpty) "" + h
     else s"$h ${t.printElements}"
+
+  /** @param predicate- Receives a MyPredicate Object
+    *  @return
+    */
+  def filter(predicate: MyPredicate[A]): MyList[A] = {
+    if (predicate.test(h)) new Cons(h, t.filter(predicate))
+    else t.filter(predicate)
+  }
+
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    *  @return
+    */
+  def map[B](transformer: MyTransformer[A, B]): MyList[B] = {
+    new Cons(transformer.transform(h), t.map(transformer))
+  }
+
+  /** @param list- Receives a object of MyList.
+    * @tparam B -Type Parameter
+    * @return
+    */
+  def ++[B >: A](list: MyList[B]): MyList[B] = new Cons(h, t ++ list)
+
+  /** @param transformer- Receives a MyTransformer Object
+    * @tparam B -Type Parameter
+    *  @return
+    */
+  def flatMap[B](transformer: MyTransformer[A, MyList[B]]): MyList[B] =
+    transformer.transform(h) ++ t.flatMap(transformer)
 }
+
+/** Generic Trait MyPredicate[T]
+  */
+trait MyPredicate[-T] {
+  def test(element: T): Boolean
+}
+
+/** Generic trait MyTransformer[A,B]
+  */
+trait MyTransformer[-A, B] {
+  def transform(elem: A): B
+}
+
+/** MyList
+  *  -map(transformer) => MyList
+  *  -filter(predicate) => MyList
+  *  -flatMAp(transformer from A to MyList[B] =>MyList[B]
+  */
 
 object ListTest extends App {
   val listOfIntegers: MyList[Int] =
     new Cons[Int](1, new Cons[Int](2, new Cons[Int](3, Empty)))
+  val anotherListOfIntegers: MyList[Int] =
+    new Cons[Int](6, new Cons[Int](4, new Cons[Int](5, Empty)))
   val listOfString: MyList[String] =
     new Cons[String]("Hello", new Cons[String]("World", Empty))
   println(listOfIntegers.toString)
   println(listOfString.toString)
+
+  /*println(
+   *    listOfIntegers
+   *      .map(new MyTransformer[Int, Int] {
+   *        override def transform(elem: Int): Int = elem * 2
+   *      })
+   *      .toString
+   *  )
+   */
+
+  println(
+    listOfIntegers
+      .map((elem: Int) => elem * 2)
+      .toString
+  )
+
+  println(listOfIntegers.filter((element: Int) => element % 2 == 0).toString)
+
+  println(listOfIntegers ++ anotherListOfIntegers)
+
+  /* println(
+   *    listOfIntegers
+   *      .flatMap(new MyTransformer[Int, MyList[Int]] {
+   *        override def transform(elem: Int): MyList[Int] =
+   *          new Cons[Int](elem, new Cons[Int](elem + 1, Empty))
+   *      })
+   *      .toString
+   *  )
+   */
+
+  println(
+    listOfIntegers
+      .flatMap((elem: Int) =>
+        new Cons[Int](elem, new Cons[Int](elem + 1, Empty))
+      )
+      .toString
+  )
 }
