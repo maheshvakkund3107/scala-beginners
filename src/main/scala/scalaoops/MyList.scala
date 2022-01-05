@@ -51,7 +51,7 @@ abstract class MyList[+A] {
   def ++[B >: A](list: MyList[B]): MyList[B]
 }
 
-object Empty extends MyList[Nothing] {
+case object Empty extends MyList[Nothing] {
 
   /** @return - For a empty list there is no head so we throw the NoSuchElementException.
     */
@@ -69,7 +69,7 @@ object Empty extends MyList[Nothing] {
     * @return
     */
   def add[B >: Nothing](element: B): MyList[B] =
-    new Cons(element, Empty)
+    Cons(element, Empty)
 
   /** @return
     */
@@ -101,7 +101,7 @@ object Empty extends MyList[Nothing] {
 
 }
 
-class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
+case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
 
   /** @return - Will return the head for MyList Object.
     */
@@ -118,7 +118,7 @@ class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
   /** @param element- element contains the value to be added to MyList.
     * @return
     */
-  override def add[B >: A](element: B): MyList[B] = new Cons(element, this)
+  override def add[B >: A](element: B): MyList[B] = Cons(element, this)
 
   /** @return
     */
@@ -130,7 +130,7 @@ class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     *  @return
     */
   def filter(predicate: MyPredicate[A]): MyList[A] = {
-    if (predicate.test(h)) new Cons(h, t.filter(predicate))
+    if (predicate.test(h)) Cons(h, t.filter(predicate))
     else t.filter(predicate)
   }
 
@@ -139,14 +139,14 @@ class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     *  @return
     */
   def map[B](transformer: MyTransformer[A, B]): MyList[B] = {
-    new Cons(transformer.transform(h), t.map(transformer))
+    Cons(transformer.transform(h), t.map(transformer))
   }
 
   /** @param list- Receives a object of MyList.
     * @tparam B -Type Parameter
     * @return
     */
-  def ++[B >: A](list: MyList[B]): MyList[B] = new Cons(h, t ++ list)
+  def ++[B >: A](list: MyList[B]): MyList[B] = Cons(h, t ++ list)
 
   /** @param transformer- Receives a MyTransformer Object
     * @tparam B -Type Parameter
@@ -184,15 +184,6 @@ object ListTest extends App {
   println(listOfIntegers.toString)
   println(listOfString.toString)
 
-  /*println(
-   *    listOfIntegers
-   *      .map(new MyTransformer[Int, Int] {
-   *        override def transform(elem: Int): Int = elem * 2
-   *      })
-   *      .toString
-   *  )
-   */
-
   println(
     listOfIntegers
       .map((elem: Int) => elem * 2)
@@ -203,16 +194,6 @@ object ListTest extends App {
 
   println(listOfIntegers ++ anotherListOfIntegers)
 
-  /* println(
-   *    listOfIntegers
-   *      .flatMap(new MyTransformer[Int, MyList[Int]] {
-   *        override def transform(elem: Int): MyList[Int] =
-   *          new Cons[Int](elem, new Cons[Int](elem + 1, Empty))
-   *      })
-   *      .toString
-   *  )
-   */
-
   println(
     listOfIntegers
       .flatMap((elem: Int) =>
@@ -220,4 +201,5 @@ object ListTest extends App {
       )
       .toString
   )
+  println(listOfIntegers == anotherListOfIntegers)
 }

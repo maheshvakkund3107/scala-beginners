@@ -1,0 +1,34 @@
+--Map without the Single Abstract Method format.
+  println(
+    listOfIntegers
+      .map(new MyTransformer[Int, Int] {
+        override def transform(elem: Int): Int = elem * 2
+      })
+      .toString
+  )
+
+--Map with the Single Abstract Method format.
+    println(
+      listOfIntegers
+        .map((elem: Int) => elem * 2)
+        .toString
+    )
+
+--Flat Map without the Single Abstract Method format.
+ println(
+    listOfIntegers
+      .flatMap(new MyTransformer[Int, MyList[Int]] {
+        override def transform(elem: Int): MyList[Int] =
+          new Cons[Int](elem, new Cons[Int](elem + 1, Empty))
+      })
+      .toString
+  )
+
+--Flat Map with the Single Abstract Method format.
+  println(
+    listOfIntegers
+      .flatMap((elem: Int) =>
+        new Cons[Int](elem, new Cons[Int](elem + 1, Empty))
+      )
+      .toString
+
