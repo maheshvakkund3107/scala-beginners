@@ -16,9 +16,6 @@ object WhatsAFunction extends App {
   }
   println(stringToInt("3") + 4)
 
-  /*  val adder: ((Int, Int) => Int) = new Function2[Int, Int, Int] {
-    override def apply(a: Int, b: Int): Int = a + b
-  }*/
   val adder: (Int, Int) => Int = (a: Int, b: Int) => a + b
 
   /** Function types : Function2[A,B,R] === (A,B)=>R
