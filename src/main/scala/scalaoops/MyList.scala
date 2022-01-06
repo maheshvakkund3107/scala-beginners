@@ -49,6 +49,15 @@ abstract class MyList[+A] {
     * @return
     */
   def ++[B >: A](list: MyList[B]): MyList[B]
+
+  /** @param f- Receives a function.
+    */
+  def foreach(f: A => Unit): Unit
+
+  /** @param compare - Two elements to compare are received.
+    * @return
+    */
+  def sort(compare: (A, A) => Int): MyList[A]
 }
 
 case object Empty extends MyList[Nothing] {
@@ -79,25 +88,31 @@ case object Empty extends MyList[Nothing] {
     * @tparam B -Type Parameter
     *  @return
     */
-  def map[B](transformer: Nothing => B): MyList[B] = Empty
+  override def map[B](transformer: Nothing => B): MyList[B] = Empty
 
   /** @param transformer- Receives a MyTransformer Object
     * @tparam B -Type Parameter
     *  @return
     */
-  def flatMap[B](transformer: Nothing => MyList[B]): MyList[B] =
+  override def flatMap[B](transformer: Nothing => MyList[B]): MyList[B] =
     Empty
 
   /** @param predicate- Receives a MyPredicate Object
     *  @return
     */
-  def filter(predicate: Nothing => Boolean): MyList[Nothing] = Empty
+  override def filter(predicate: Nothing => Boolean): MyList[Nothing] = Empty
 
   /** @param list- Receives a object of MyList.
     * @tparam B -Type Parameter
     * @return
     */
-  def ++[B >: Nothing](list: MyList[B]): MyList[B] = list
+  override def ++[B >: Nothing](list: MyList[B]): MyList[B] = list
+
+  /** @param f- Receives a function.
+    */
+  override def foreach(f: Nothing => Unit): Unit = ()
+
+  def sort(compare: (Nothing, Nothing) => Int) = Empty
 
 }
 
@@ -129,7 +144,7 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
   /** @param predicate- Receives a MyPredicate Object
     *  @return
     */
-  def filter(predicate: A => Boolean): MyList[A] = {
+  override def filter(predicate: A => Boolean): MyList[A] = {
     if (predicate(h)) Cons(h, t.filter(predicate))
     else t.filter(predicate)
   }
@@ -138,7 +153,7 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     * @tparam B -Type Parameter
     *  @return
     */
-  def map[B](transformer: A => B): MyList[B] = {
+  override def map[B](transformer: A => B): MyList[B] = {
     Cons(transformer(h), t.map(transformer))
   }
 
@@ -146,14 +161,28 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     * @tparam B -Type Parameter
     * @return
     */
-  def ++[B >: A](list: MyList[B]): MyList[B] = Cons(h, t ++ list)
+  override def ++[B >: A](list: MyList[B]): MyList[B] = Cons(h, t ++ list)
 
   /** @param transformer- Receives a MyTransformer Object
     * @tparam B -Type Parameter
     *  @return
     */
-  def flatMap[B](transformer: A => MyList[B]): MyList[B] =
+  override def flatMap[B](transformer: A => MyList[B]): MyList[B] =
     transformer(h) ++ t.flatMap(transformer)
+
+  override def foreach(f: A => Unit): Unit = {
+    f(h)
+    t.foreach(f)
+  }
+  def sort(compare: (A, A) => Int): MyList[A] = {
+    def insert(x: A, sortedList: MyList[A]): MyList[A] = {
+      if (sortedList.isEmpty) Cons(x, Empty)
+      else if (compare(x, sortedList.head) <= 0) Cons(x, sortedList)
+      else Cons(sortedList.head, insert(x, sortedList.tail))
+    }
+    val sortedTail = t.sort(compare)
+    insert(h, sortedTail)
+  }
 }
 
 /** MyList
@@ -196,5 +225,8 @@ object ListTest extends App {
       .map((elem: Int) => elem * 2)
       .toString
   )
+
+  listOfIntegers.foreach(println)
+  println(listOfIntegers.sort((x, y) => y - x))
 
 }
