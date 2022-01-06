@@ -58,6 +58,21 @@ abstract class MyList[+A] {
     * @return
     */
   def sort(compare: (A, A) => Int): MyList[A]
+
+  /** @param list
+    * @param zip
+    * @tparam B
+    * @tparam C
+    * @return
+    */
+  def zipWith[B, C](list: MyList[B], zip: (A, B) => C): MyList[C]
+
+  /** @param start
+    * @param operator
+    * @tparam B
+    * @return
+    */
+  def fold[B](start: B)(operator: (B, A) => B): B
 }
 
 case object Empty extends MyList[Nothing] {
@@ -112,7 +127,29 @@ case object Empty extends MyList[Nothing] {
     */
   override def foreach(f: Nothing => Unit): Unit = ()
 
+  /** @param compare - Two elements to compare are received.
+    *  @return
+    */
   def sort(compare: (Nothing, Nothing) => Int) = Empty
+
+  /** @param list
+    * @param zip
+    * @tparam B
+    * @tparam C
+    *  @return
+    */
+  def zipWith[B, C](list: MyList[B], zip: (Nothing, B) => C): MyList[C] = {
+    if (!list.isEmpty)
+      throw new RuntimeException("List do not have the same length")
+    else Empty
+  }
+
+  /** @param start
+    * @param operator
+    * @tparam B
+    *  @return
+    */
+  def fold[B](start: B)(operator: (B, Nothing) => B): B = start
 
 }
 
@@ -183,6 +220,23 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     val sortedTail = t.sort(compare)
     insert(h, sortedTail)
   }
+
+  /** @param list
+    * @param zip
+    * @tparam B
+    * @tparam C
+    *  @return
+    */
+  def zipWith[B, C](list: MyList[B], zip: (A, B) => C): MyList[C] = {
+    if (list.isEmpty)
+      throw new RuntimeException("List do not have the same length")
+    else
+      Cons(zip(h, list.head), t.zipWith(list.tail, zip))
+  }
+
+  def fold[B](start: B)(operator: (B, A) => B): B = {
+    t.fold(operator(start, h))(operator)
+  }
 }
 
 /** MyList
@@ -195,7 +249,7 @@ object ListTest extends App {
   val listOfIntegers: MyList[Int] =
     new Cons[Int](1, new Cons[Int](2, new Cons[Int](3, Empty)))
   val anotherListOfIntegers: MyList[Int] =
-    new Cons[Int](6, new Cons[Int](4, new Cons[Int](5, Empty)))
+    new Cons[Int](6, new Cons[Int](4, Empty))
   val listOfString: MyList[String] =
     new Cons[String]("Hello", new Cons[String]("World", Empty))
   println(listOfIntegers.toString)
@@ -229,4 +283,8 @@ object ListTest extends App {
   listOfIntegers.foreach(println)
   println(listOfIntegers.sort((x, y) => y - x))
 
+  println(
+    anotherListOfIntegers.zipWith[String, String](listOfString, _ + "-" + _)
+  )
+  println(listOfIntegers.fold(0)(_ + _))
 }
