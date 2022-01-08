@@ -59,19 +59,8 @@ abstract class MyList[+A] {
     */
   def sort(compare: (A, A) => Int): MyList[A]
 
-  /** @param list
-    * @param zip
-    * @tparam B
-    * @tparam C
-    * @return
-    */
   def zipWith[B, C](list: MyList[B], zip: (A, B) => C): MyList[C]
 
-  /** @param start
-    * @param operator
-    * @tparam B
-    * @return
-    */
   def fold[B](start: B)(operator: (B, A) => B): B
 }
 
@@ -130,25 +119,14 @@ case object Empty extends MyList[Nothing] {
   /** @param compare - Two elements to compare are received.
     *  @return
     */
-  def sort(compare: (Nothing, Nothing) => Int) = Empty
+  def sort(compare: (Nothing, Nothing) => Int): Empty.type = Empty
 
-  /** @param list
-    * @param zip
-    * @tparam B
-    * @tparam C
-    *  @return
-    */
   def zipWith[B, C](list: MyList[B], zip: (Nothing, B) => C): MyList[C] = {
     if (!list.isEmpty)
       throw new RuntimeException("List do not have the same length")
     else Empty
   }
 
-  /** @param start
-    * @param operator
-    * @tparam B
-    *  @return
-    */
   def fold[B](start: B)(operator: (B, Nothing) => B): B = start
 
 }
@@ -221,12 +199,6 @@ case class Cons[+A](h: A, t: MyList[A]) extends MyList[A] {
     insert(h, sortedTail)
   }
 
-  /** @param list
-    * @param zip
-    * @tparam B
-    * @tparam C
-    *  @return
-    */
   def zipWith[B, C](list: MyList[B], zip: (A, B) => C): MyList[C] = {
     if (list.isEmpty)
       throw new RuntimeException("List do not have the same length")
@@ -287,4 +259,13 @@ object ListTest extends App {
     anotherListOfIntegers.zipWith[String, String](listOfString, _ + "-" + _)
   )
   println(listOfIntegers.fold(0)(_ + _))
+
+  /** for Comprehension
+    */
+  val combinations = for {
+    n <- listOfIntegers
+    string <- listOfString
+  } yield s"$n - $string"
+
+  println(combinations)
 }
