@@ -2,7 +2,6 @@ package patternmatching
 
 import patternmatching.PatternMatching.{Person, bob}
 import scalaoops.Generics.MyList
-import scalaoops.practiceexercise.{Cons, Empty}
 
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
