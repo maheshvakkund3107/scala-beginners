@@ -4,8 +4,7 @@ import scala.util.Random
 
 object Sequences extends App {
 
-  /**
-    * Seq
+  /** Seq
     */
   val aSeq = Seq(1, 2, 3, 4, 5)
   println(aSeq)
@@ -14,8 +13,7 @@ object Sequences extends App {
   println(aSeq ++ Seq(7, 5, 6))
   println(aSeq.sorted)
 
-  /**
-    * Ranges
+  /** Ranges
     */
   val aRange: Seq[Int] = 1 to 10
   aRange.foreach(println)
@@ -25,8 +23,7 @@ object Sequences extends App {
 
   (1 to 10).foreach(x => println("Hello"))
 
-  /**
-    * Lists
+  /** Lists
     * Prepend +:
     * Append :+
     */
@@ -39,28 +36,26 @@ object Sequences extends App {
 
   println(aList.mkString("-|-"))
 
-  /**
-    * Arrays
+  /** Arrays
+    * Value will be assigned with default values for the arrays.
     */
   val numbers = Array(1, 2, 3, 4)
   val threeElements = Array.ofDim[Int](4)
   println(threeElements.mkString(" "))
   threeElements.foreach(println)
 
-  /**
-    * Mutation
+  /** Mutation
     */
   numbers(2) = 0
   println(numbers.mkString(" "))
 
-  /**
-    * Arrays and Seq
+  /** Arrays and Seq.
     */
-  val numbersSeq: Seq[Int] = numbers //Implicit Conversion to wrapped array.
-  println(numbersSeq)
+  /** val numbersSeq: Seq[Int] = numbers //Implicit Conversion to wrapped array.
+    *  println(numbersSeq)
+    */
 
-  /**
-    * Vectors vs List
+  /** Vectors vs List
     */
   val maxRuns = 1000
   val maxCapacity = 1000000
@@ -78,14 +73,12 @@ object Sequences extends App {
   val numberList = (1 to maxCapacity).toList
   val numberVector = (1 to maxCapacity).toVector
 
-  /**
-    * 1.Keep reference to tail.
+  /** 1.Keep reference to tail.
     * 2.Updating an element in the middle takes long
     */
   println(getWriteTime(numberList))
 
-  /**
-    * 1.Depth of tree is small.
+  /** 1.Depth of tree is small.
     * 2.Needs to replace an entire 32 -element chunk.
     */
   println(getWriteTime(numberVector))
