@@ -55,6 +55,9 @@ object Sequences extends App {
     *  println(numbersSeq)
     */
 
+  val vector: Vector[Int] = Vector(1, 2, 3)
+  println(vector)
+
   /** Vectors vs List
     */
   val maxRuns = 1000
@@ -73,14 +76,25 @@ object Sequences extends App {
   val numberList = (1 to maxCapacity).toList
   val numberVector = (1 to maxCapacity).toVector
 
-  /** 1.Keep reference to tail.
+  /** Advantage
+    * 1.Keep reference to tail.
+    * Disadvantage
     * 2.Updating an element in the middle takes long
     */
   println(getWriteTime(numberList))
 
-  /** 1.Depth of tree is small.
+  /** Advantage
+    * 1.Depth of tree is small.
+    * Disadvantage
     * 2.Needs to replace an entire 32 -element chunk.
     */
   println(getWriteTime(numberVector))
 
+  /** Vectors.
+    * Vector is the default implementation for the sequences.
+    * 1. Vectors have effectively  constant indexed read and write.
+    * 2. Fast element addition: append/prepend.
+    * 3. Implemented as a fixed branched trie (Branch factor 32)
+    * 4. Good Performance for large sizes.
+    */
 }
