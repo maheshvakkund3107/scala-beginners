@@ -10,62 +10,52 @@ object option extends App {
   println(myFirstOption)
   println(noOption)
 
-  /**
-   * Unsafe API'S
-   */
+  /** Unsafe API
+    */
 
   def unSafeMethod(): String = null
 
-  /**
-   * Wrong Approach
-   * Some should have some valid values.
-   * val result = Some(null)
-   */
+  /** Wrong Approach
+    * Some should have some valid values.
+    * val result = Some(null)
+    */
 
-  /**
-   * Some or None is built automatically by the compiler.
-   * Null checks are handled by compiler in the Option
-   */
+  /** Some or None is built automatically by the compiler.
+    * Null checks are handled by compiler in the Option
+    */
   val result = Option(unSafeMethod())
 
-  /**
-   * Chained Methods.
-   */
+  /** Chained Methods.
+    */
   def backupMethods(): String = "A Valid result"
 
   val chainedResult = Option(unSafeMethod()).orElse(Option(backupMethods()))
 
-  /**
-   * Design Unsafe Methods
-   */
+  /** Design Unsafe Methods
+    */
   def betterUnsafeMethods(): Option[String] = None
 
   def betterBackUpMethods(): Option[String] = Some("A Valid Result")
 
-  /**
-   * Functions on Options.
-   */
+  /** Functions on Options.
+    */
   println(myFirstOption.isEmpty)
 
-  /**
-   * Not Recommended - Unsafe to use this.
-   */
+  /** Not Recommended - Unsafe to use this.
+    */
   println(myFirstOption.get)
 
-  /**
-   * map, filter,flatMap
-   */
+  /** map, filter,flatMap
+    */
   println(myFirstOption.map(_ * 2))
   println(myFirstOption.filter(_ > 10))
   println(myFirstOption.flatMap(x => Option(x * 10)))
 
-  /**
-   * For Comprehensions
-   */
+  /** For Comprehensions
+    */
 
-  /**
-   * Exercise 1
-   */
+  /** Exercise 1
+    */
 
   val config: Map[String, String] = Map(
     "host" -> "127.0.0.1",
@@ -85,43 +75,42 @@ object option extends App {
     }
   }
 
-  /**
-   * Try to establish the connection, if so- print the connect method.
-   */
+  /** Try to establish the connection, if so- print the connect method.
+    */
 
   val host = config.get("host")
   val port = config.get("port")
-  /**
-   * if (h!=null)
-   * if(p!=null)
-   * return Connection.apply(h,p)
-   */
+
+  /** if (h!=null)
+    * if(p!=null)
+    * return Connection.apply(h,p)
+    */
   val connection = host.flatMap(h => port.flatMap(p => Connection.apply(h, p)))
-  /**
-   * if(connectionStats == null) println(None) else print(ConnectionStatus.get)
-   *
-   */
+
+  /** if(connectionStats == null) println(None) else print(ConnectionStatus.get)
+    */
   val connectionStatus = connection.map(c => c.connect)
   println(connectionStatus)
 
-  /**
-   * if(status!=null)
-   * println(status)
-   */
+  /** if(status!=null)
+    * println(status)
+    */
   connectionStatus.foreach(println)
 
-  /**
-   * Chained calls.
-   */
-  config.get("host")
-    .flatMap(host => config.get("port")
-      .flatMap(port => Connection(host, port))
-      .map(connection => connection.connect))
+  /** Chained calls.
+    */
+  config
+    .get("host")
+    .flatMap(host =>
+      config
+        .get("port")
+        .flatMap(port => Connection(host, port))
+        .map(connection => connection.connect)
+    )
     .foreach(println)
 
-  /**
-   * For Comprehension
-   */
+  /** For Comprehension
+    */
   val forConnectionStatus = for {
     host <- config.get("host")
     port <- config.get("port")

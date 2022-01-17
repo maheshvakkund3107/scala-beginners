@@ -2,7 +2,7 @@ package collections
 
 import scala.util.{Failure, Random, Success, Try}
 
-object handlingfailure extends App {
+object handlingFailure extends App {
 
   /** Create Success and Failure
     */
@@ -11,8 +11,8 @@ object handlingfailure extends App {
   val aFailure: _root_.scala.util.Failure[Nothing] =
     Failure.apply(new RuntimeException("Super Failure"))
 
-  Predef.println(handlingfailure.sSuccess)
-  Predef.println(handlingfailure.aFailure)
+  Predef.println(handlingFailure.sSuccess)
+  Predef.println(handlingFailure.aFailure)
 
   def unSafeMethod(): String = throw new RuntimeException(
     "No String for you buster"
@@ -21,8 +21,8 @@ object handlingfailure extends App {
   /** Try objects via the apply method.
     */
   val potentialFailure: _root_.scala.util.Try[_root_.scala.Predef.String] =
-    Try.apply(handlingfailure.unSafeMethod())
-  Predef.println(handlingfailure.potentialFailure)
+    Try.apply(handlingFailure.unSafeMethod())
+  Predef.println(handlingFailure.potentialFailure)
 
   /** syntax sugar
     */
@@ -43,9 +43,9 @@ object handlingfailure extends App {
   def backUpMethod(): String = "A valid Result"
 
   val fallbackTry: _root_.scala.util.Try[_root_.scala.Predef.String] = Try
-    .apply(handlingfailure.unSafeMethod())
-    .orElse(Try.apply(handlingfailure.backUpMethod()))
-  Predef.println(handlingfailure.fallbackTry)
+    .apply(handlingFailure.unSafeMethod())
+    .orElse(Try.apply(handlingFailure.backUpMethod()))
+  Predef.println(handlingFailure.fallbackTry)
 
   /** If you design the API.
     */
