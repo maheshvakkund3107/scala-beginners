@@ -54,7 +54,6 @@ object PatternMatching extends App {
   }
 
   val i = 6
-  val isEvenCond = if (i % 2 == 0) true else false
   val isEvenNormal = i % 2 == 0
 
   /** Exercise.
