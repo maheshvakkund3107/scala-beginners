@@ -120,4 +120,12 @@ object handlingFailure extends App {
     *
     *  }
     */
+
+  /** Use Try to handle exceptions gracefully.
+    * - Avoid runtime crashes due to uncaught exceptions.
+    * - Avoid an endless amount of try-catches.
+    *
+    * If you design a method to return a  but may throw an exception.
+    * return  a  Try[Type] instead.
+    */
 }
